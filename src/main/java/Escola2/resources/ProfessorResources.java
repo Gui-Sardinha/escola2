@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import Escola2.entities.Professor;
+import Escola2.dto.ProfessorDTO;
 import Escola2.services.ProfessorService;
 
 @RestController
@@ -26,26 +26,26 @@ public class ProfessorResources {
 	private ProfessorService service;
 	
 	@GetMapping
-	public ResponseEntity<List<Professor>> findAll(){
-		List<Professor> list = service.findAll();
+	public ResponseEntity<List<ProfessorDTO>> findAll(){
+		List<ProfessorDTO> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Professor> findById(@PathVariable Long id){
-		Professor obj = service.findById(id);
+	public ResponseEntity<ProfessorDTO> findById(@PathVariable Long id){
+		ProfessorDTO obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
 	
 	@PostMapping
-	public ResponseEntity<Professor> insert(@RequestBody Professor obj){
+	public ResponseEntity<ProfessorDTO> insert(@RequestBody ProfessorDTO obj){
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).body(obj);
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Professor> update(@PathVariable Long id, @RequestBody Professor obj){
+	public ResponseEntity<ProfessorDTO> update(@PathVariable Long id, @RequestBody ProfessorDTO obj){
 		obj = service.update(id, obj);
 		return ResponseEntity.ok().body(obj);
 	}

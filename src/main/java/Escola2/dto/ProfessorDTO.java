@@ -1,25 +1,31 @@
-package Escola2.entities;
+package Escola2.dto;
 
-import java.io.Serializable;
 import java.util.Objects;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import Escola2.entities.Pessoa;
+import Escola2.entities.Professor;
 
-@Entity
-@Table(name = "tb_professor")
-public class Professor extends Pessoa implements Serializable{
-	private static final long serialVersionUID = 1L;
-	
+public class ProfessorDTO extends Pessoa{
 	
 	private Double salario;
 
-	public Professor() {
+	public ProfessorDTO() {
 	}
 
-	public Professor(Double salario) {
+	public ProfessorDTO(Double salario) {
 		this.salario = salario;
 	}
+	
+	public ProfessorDTO(Professor professor) {
+		id = professor.getId();
+		nome = professor.getNome();
+		numeroTelefone = professor.getNumeroTelefone();
+		email = professor.getEmail();
+		materias = professor.getListaDeMateria();
+		enderecos = professor.getEnderecos();
+		salario = professor.getSalario();
+	}
+	
 
 	public Double getSalario() {
 		return salario;
@@ -45,15 +51,12 @@ public class Professor extends Pessoa implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Professor other = (Professor) obj;
+		ProfessorDTO other = (ProfessorDTO) obj;
 		return Objects.equals(salario, other.salario);
 	}
 
 	@Override
 	public String toString() {
-		return "Professor [" + "nome: " + this.getNome()   + " salario=" + salario + "]";
+		return "ProfessorDTO [salario=" + salario + "]";
 	}
-	
-	
-
 }

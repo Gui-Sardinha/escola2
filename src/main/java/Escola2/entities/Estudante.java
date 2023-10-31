@@ -14,7 +14,6 @@ public class Estudante extends Pessoa implements Serializable{
 	
 	
 	private Long matricula;
-	
 	private Double media;
 	
 	public Estudante() {

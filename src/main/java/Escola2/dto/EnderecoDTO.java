@@ -1,52 +1,48 @@
-package Escola2.entities;
+package Escola2.dto;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
+import Escola2.entities.Endereco;
 
-@Entity
-@Table(name = "tb_endereco")
-public class Endereco implements Serializable{
-
-	private static final long serialVersionUID = 1L;
+public class EnderecoDTO {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nomeRua;
 	private String estado;
 	private String cidade;
 	private Integer cep;
 	
-	@JsonIgnore
-	@ManyToMany(mappedBy = "enderecos")
-	private List<Estudante> estudantes = new ArrayList<>();
+	private List<EstudanteDTO> estudantes = new ArrayList<>();
 	
-	@JsonIgnore
-	@ManyToMany(mappedBy = "enderecos")
-	private List<Professor> professores = new ArrayList<>();
+
+	private List<ProfessorDTO> professores = new ArrayList<>();
 	
-	public Endereco() {
+	
+	public EnderecoDTO() {
 	}
 
 
-	public Endereco(Long id, String nomeRua, String estado, String cidade, Integer cep) {
-		super();
+	public EnderecoDTO(Long id, String nomeRua, String estado, String cidade, Integer cep) {
 		this.id = id;
 		this.nomeRua = nomeRua;
 		this.estado = estado;
 		this.cidade = cidade;
 		this.cep = cep;
+	}
+	
+	public EnderecoDTO(Endereco endereco) {
+		id = endereco.getId();
+		nomeRua = endereco.getNomeRua();
+		estado = endereco.getEstado();
+		cidade = endereco.getEstado();
+		cep = endereco.getCep();
+		estudantes = endereco.getEstudantes().stream().map(EstudanteDTO::new).collect(Collectors.toList());
+		professores = endereco.getProfessores().stream().map(ProfessorDTO::new).collect(Collectors.toList());
 	}
 
 
@@ -99,23 +95,23 @@ public class Endereco implements Serializable{
 		this.cep = cep;
 	}
 	
-	
-	public List<Estudante> getEstudantes() {
+	@JsonIgnore
+	public List<EstudanteDTO> getEstudantes() {
 		return estudantes;
 	}
 
 
-	public void setEstudantes(Estudante estudante) {
+	public void setEstudantes(EstudanteDTO estudante) {
 		estudantes.add(estudante);
 	}
 
 	@JsonIgnore
-	public List<Professor> getProfessores() {
+	public List<ProfessorDTO> getProfessores() {
 		return professores;
 	}
 
 
-	public void setProfessores(Professor professor) {
+	public void setProfessores(ProfessorDTO professor) {
 		professores.add(professor);
 	}
 
@@ -134,8 +130,15 @@ public class Endereco implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Endereco other = (Endereco) obj;
+		EnderecoDTO other = (EnderecoDTO) obj;
 		return Objects.equals(id, other.id);
+	}
+
+
+	@Override
+	public String toString() {
+		return "EnderecoDTO [id=" + id + ", nomeRua=" + nomeRua + ", estado=" + estado + ", cidade=" + cidade + ", cep="
+				+ cep + "]";
 	}
 	
 	

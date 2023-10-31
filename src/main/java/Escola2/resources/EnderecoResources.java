@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import Escola2.entities.Endereco;
+import Escola2.dto.EnderecoDTO;
 import Escola2.services.EnderecoService;
 
 @RestController
@@ -26,26 +26,26 @@ public class EnderecoResources {
 	private EnderecoService service;
 	
 	@GetMapping
-	public ResponseEntity<List<Endereco>> findAll(){
-		List<Endereco> list = service.findAll();
+	public ResponseEntity<List<EnderecoDTO>> findAll(){
+		List<EnderecoDTO> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Endereco> findById(@PathVariable Long id){
-		Endereco obj = service.findById(id);
+	public ResponseEntity<EnderecoDTO> findById(@PathVariable Long id){
+		EnderecoDTO obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
 	
 	@PostMapping
-	public ResponseEntity<Endereco> insert(@RequestBody Endereco obj){
+	public ResponseEntity<EnderecoDTO> insert(@RequestBody EnderecoDTO obj){
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).body(obj);
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Endereco> update(@PathVariable Long id, @RequestBody Endereco obj){
+	public ResponseEntity<EnderecoDTO> update(@PathVariable Long id, @RequestBody EnderecoDTO obj){
 		obj = service.update(id, obj);
 		return ResponseEntity.ok().body(obj);
 	}

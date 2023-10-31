@@ -1,6 +1,5 @@
 package Escola2.entities;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -13,26 +12,25 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.MappedSuperclass;
 
 @MappedSuperclass
-public abstract class Pessoa implements Serializable{
-	private static final long serialVersionUID = 1L;
+public abstract class Pessoa {
 	
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	private String nome;
-	private Integer numeroTelefone;
-	private String email;
+	protected Long id;
+	protected String nome;
+	protected Integer numeroTelefone;
+	protected String email;
 	
 	
 	@ManyToMany
 	@JoinColumn(name = "materia_id", referencedColumnName = "id")
-	private List<Materia> materias = new ArrayList<>();
+	protected List<Materia> materias = new ArrayList<>();
 	
 	
 	@ManyToMany
 	@JoinColumn (name = "endereco_id", referencedColumnName = "id")
-	private List<Endereco> enderecos = new ArrayList<>();
+	protected List<Endereco> enderecos = new ArrayList<>();
 
 	public Pessoa() {
 	}

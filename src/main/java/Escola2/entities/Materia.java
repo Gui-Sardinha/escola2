@@ -13,16 +13,18 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "tb_materia")
 public class Materia implements Serializable{
-
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@NotBlank
 	private String nome;
 	
 	@JsonIgnore
@@ -101,5 +103,14 @@ public class Materia implements Serializable{
 		Materia other = (Materia) obj;
 		return Objects.equals(id, other.id);
 	}
+
+
+	@Override
+	public String toString() {
+		return "Materia [id=" + id + ", nome=" + nome + ", estudantes=" + estudantes + ", professores=" + professores
+				+ "]";
+	}
+	
+	
 
 }
